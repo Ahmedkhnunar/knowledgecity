@@ -4,7 +4,7 @@
 A simple and basic system to perform, GET, POST and DELETE methods using Ajax, PHP and MySQL using OOP.
 
 **How to use**
-Download code in your local server and start xampp in browser type http://localhost/knowledgecity
+Download code in your local server create a folder named knowledgecity unzip project in knowledgecity folder then change change database credentials and start xampp in browser type http://localhost/knowledgecity
 
 
 
