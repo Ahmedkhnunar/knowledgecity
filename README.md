@@ -1,5 +1,4 @@
 # knowledgecity
-A simple php-mysql-ajax task
 
 **php-mysql-ajax**
 A simple and basic system to perform, GET, POST and DELETE methods using Ajax, PHP and MySQL using OOP.
