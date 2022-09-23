@@ -1,1 +1,132 @@
-
+body{
+	margin: 0px;
+	padding: 0px;
+	color: #040404;
+	font-size: 14px;
+	background-color: #F6F6F6;
+}
+html,
+body.login-page{
+	height: 100%;
+}
+.login-form-container{
+	max-width: 380px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.login-form-container h6{
+	font-size: .9rem;
+}
+.login-form-container .input-group .rounded-pill-top{
+	border-top-left-radius: 100px;
+}
+.login-form-container .input-group .rounded-pill-bottom{
+	border-bottom-left-radius: 100px;
+}
+.login-form-container .input-group .rounded-pill-right{
+	border-top-right-radius: 100px;
+}
+.login-form-container .input-group .rounded-pill-left{
+	border-bottom-right-radius: 100px;
+}
+.login-form-container .btn-login{
+	color: #F6F6F6;
+	background-color: #EC8D3C;
+}
+.login-form-container .btn-login:hover,
+.login-form-container .btn-login:active,
+.login-form-container .btn-login:focus{
+	color: #F6F6F6;
+	background-color: #E18333;
+	border-color: #E18333;
+}
+.login-form-container .btn-login svg {
+	fill: #F6F6F6;
+	border: 1px solid #F6F6F6;
+	border-radius: 50px;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+}
+.login-form-container .input-group .form-control{
+	font-weight: 200;
+	border-color: #b1b1b1;
+}
+.login-form-container .input-group .form-control:focus{
+	box-shadow: none;
+}
+.login-form-container .input-group .input-group-text{
+	border-color: #b1b1b1;
+}
+.login-form-container .input-group .form-check-input{
+	margin-top: .30em;
+	border: 1px solid #a1a1a1;
+}
+.login-form-container .input-group .form-check-input:checked {
+  border-color: #b1b1b1;
+}
+.userlist-table{
+	border-top: 10px solid #E98C3C;
+}
+.media-header .title{
+	color: #040404;
+}
+svg.check-icon-svg {
+	fill: #188835;
+}
+.listuser-pagination .page-item .page-link{
+	color: #040404;
+	font-size: 14px;
+	box-shadow: none;
+	border: none;
+	padding: 0.150rem 0.50rem;
+	background-color: transparent;
+	border-radius: 0px!important;
+	border-bottom: 2px solid transparent;
+}
+.listuser-pagination .page-item.active .page-link,
+.listuser-pagination .page-item .page-link:hover,
+.listuser-pagination .page-item .page-link:focus{
+	color: #040404;
+	border-bottom-color: #E98C3C;
+}
+.listuser-pagination .page-item .page-link-next svg,
+.listuser-pagination .page-item .page-link-prev svg{
+	width: 12px;
+	margin-top: 1px;
+	stroke: #040404;
+}
+.listuser-pagination .page-item .page-link-next svg{
+	margin-left: 2px;
+}
+.listuser-pagination .page-item .page-link-prev svg{
+	margin-right: 2px;
+}
+.listuser-pagination .page-item .page-link-next:hover svg,
+.listuser-pagination .page-item .page-link-prev:hover svg{
+	stroke: #040404;
+	fill: #040404;
+}
+.listuser-pagination .page-item.disabled .page-link{
+	color: #6d757d;
+}
+.listuser-pagination .page-item.disabled .page-link-prev svg,
+.listuser-pagination .page-item.disabled .page-link-next svg{
+	fill: #6d757d;
+	stroke: #6d757d;
+}
+.user-list-container .btn-logout,
+.user-list-container .btn-logout:hover,
+.user-list-container .btn-logout:active,
+.user-list-container .btn-logout:visited{
+	color: #040404;
+	font-size: 14px;
+	border: none;
+	background-color: #EBEBEB;
+	border-top: 1px solid #b1b1b196;
+}
+.user-list-container .btn-logout svg{
+	margin-right: 3px;
+	margin-top: -2px;
+	/*stroke: #040404;*/
+}
