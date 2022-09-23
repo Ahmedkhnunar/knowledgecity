@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>User List | LMS</title>
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/css/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- User Lists Container -->
+        <div class="container user-list-container">
+            <div class="row">
+                <div class="col-md-12 col-lg-10 mx-auto">
+                    <!-- Grid Header -->
+                    <div class="media-header">
+                        <h3 class="title text-center fw-normal my-2">User List</h3>
+                    </div>
+                    <!-- Users Grid -->
+                    <table class="table table-striped userlist-table">
+                        <tbody id="userData">
+                            <!-- data will be appended here -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination listuser-pagination justify-content-center">
+                            <li class="page-item previous d-none">
+                                <a class="page-link page-link-prev d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                        <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                    Previous
+                                </a>
+                            </li>
+                            <!-- dynamic pages goes here -->
+                            <li class="page-item next d-none">
+                                <a class="page-link page-link-next d-flex align-items-center" href="#">Next
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Logout btn -->
+            <button class="btn btn-logout d-block w-100 fixed-bottom rounded-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+                Log Out
+            </button>
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery-3.6.1.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script type="text/javascript">
+
+            let pageno = 1;
+            $(document).ready(function(){ 
+                getUserList(pageno); 
+                $(document).on("click",".next", function(){ pageno++; getUserList(pageno)});
+                $(document).on("click",".previous", function(){ pageno--; getUserList(pageno)});
+                $(document).on("click",".pagenation", function(){ pageno = $(this).attr("page"); getUserList(pageno)});
+                $(document).on("click",".btn-logout", userLogout);
+            });
+
+            function getUserList(pageno)
+            {
+                const params = {pageno:pageno};
+                const response = AjaxRequest(params,"GET");
+                if(response.code != undefined && response.code == 400)
+                {
+                    window.location.href = "login.html"
+                }
+                else if(response.code == undefined)
+                {
+                    $("#error").html("Sorry, Something went wrong. Please try again.");
+                }
+                else if (response.code == 200) {
+                    renderUserData(response);
+                }
+                else
+                {
+                    $("#error").html(response.message);
+                }
+            }
+
+            function renderUserData(aArray)
+            {
+                $("#userData").empty();
+                $.each(aArray.data, function(k,v){appendRow(v)});
+                renderPagination(aArray.pagecount);
+            }
+
+            function appendRow({FirstName, LastName, Code, GroupName})
+            {
+                let row = '';
+
+                row +=`<tr>`;
+                    row +=`<td align="center" scope="row" class="check-icon">`;
+                        row +=`<svg class="check-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">`;
+                            row +=`<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>`;
+                        row +=`</svg>`;
+                    row +=`</td>`;
+                    row +=`<td>${Code}<small class="d-block">${FirstName} ${LastName}</small></td>`;
+                    row +=`<td>...<small class="d-block">${GroupName}</small></td>`;
+                row +=`</tr>`;
+
+                $("#userData").append(row)
+            }
+
+            function renderPagination(pageCount)
+            {
+                let classes = '';
+                let pages = '';
+                for (var i = 0; i < pageCount; i++) {
+                    classes = ( (i+1) == pageno) ? "page-item active" : "page-item";
+                    pages += `<li class="${classes}"><a class="page-link pagenation" page=${i+1} href="#">${i+1}</a></li>`;
+                }
+                
+                $(".pagenation").remove();
+                $(".previous").after(pages);
+
+                if(pageCount > 1){
+
+                    if(pageno > 1){ showPage("previous"); } else {hidePage("previous");}
+
+                    if(pageCount > pageno) { showPage("next");}else{hidePage("next");}
+                }
+                else
+                {
+                    hidePage("next");
+                    hidePage("previous");
+                }
+            }
+
+            function showPage(pageClass)
+            {
+                $(`.${pageClass}`).removeClass("d-none");
+            }
+
+            function hidePage(pageClass)
+            {
+                $(`.${pageClass}`).addClass("d-none");
+            }
+
+            function userLogout()
+            {
+                const response = AjaxRequest({},"DELETE");
+                if(response.code != undefined && response.code == 200)
+                {
+                    window.location.href = "login.html"
+                }
+            }
+
+        </script>
+    </body>
+</html>
